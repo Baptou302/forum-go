@@ -1,0 +1,46 @@
+{{define "content"}}
+{{ $p := .Profile }}
+
+<div class="overflow-hidden rounded-3xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+    <div class="h-28 bg-gradient-to-r from-brand-500 via-brand-600 to-violet-700"></div>
+    <div class="px-6 pb-6 sm:px-8">
+        <div class="-mt-12 flex flex-col gap-4 sm:flex-row sm:items-end">
+            <span class="grid h-24 w-24 shrink-0 place-items-center rounded-3xl border-4 border-white text-4xl font-extrabold uppercase text-white shadow-lg dark:border-slate-900" style="background:{{$p.AvatarColor}}">{{initial $p.Username}}</span>
+            <div class="flex-1 pb-1">
+                <div class="flex flex-wrap items-center gap-2">
+                    <h1 class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">{{$p.Username}}</h1>
+                    <span class="rounded-md px-2 py-0.5 text-xs font-bold {{roleBadge $p.Role}}">{{roleLabel $p.Role}}</span>
+                </div>
+                <p class="mt-1 flex items-center gap-1.5 text-sm text-slate-400"><i data-lucide="calendar" class="h-4 w-4"></i> Membre depuis le {{dateFR $p.CreatedAt}}</p>
+            </div>
+            {{if and .User (eq .User.ID $p.ID)}}
+            <a href="/parametres" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"><i data-lucide="pencil" class="h-4 w-4"></i> Modifier</a>
+            {{end}}
+        </div>
+
+        {{if $p.Bio}}<p class="mt-5 max-w-2xl text-slate-600 dark:text-slate-300">{{$p.Bio}}</p>{{end}}
+
+        <div class="mt-6 flex gap-3">
+            <div class="flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-2 dark:bg-slate-800/60">
+                <i data-lucide="message-square" class="h-5 w-5 text-brand-500"></i>
+                <span><span class="font-extrabold text-slate-900 dark:text-white">{{$p.ThreadCount}}</span> <span class="text-sm text-slate-400">{{plural $p.ThreadCount "sujet" "sujets"}}</span></span>
+            </div>
+            <div class="flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-2 dark:bg-slate-800/60">
+                <i data-lucide="messages-square" class="h-5 w-5 text-brand-500"></i>
+                <span><span class="font-extrabold text-slate-900 dark:text-white">{{$p.PostCount}}</span> <span class="text-sm text-slate-400">{{plural $p.PostCount "message" "messages"}}</span></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-4 mt-8 font-display text-xl font-bold text-slate-900 dark:text-white">Sujets de {{$p.Username}}</h2>
+<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+    <div class="divide-y divide-slate-100 dark:divide-slate-800">
+        {{range .Threads}}
+            {{template "thread_row" .}}
+        {{else}}
+        <p class="px-6 py-12 text-center text-sm text-slate-400">{{$p.Username}} n'a pas encore créé de sujet.</p>
+        {{end}}
+    </div>
+</div>
+{{end}}

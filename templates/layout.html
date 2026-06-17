@@ -1,0 +1,40 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="container nav-bar">
+        <a href="/" class="logo">&#9670; Forum</a>
+        <nav>
+            {{if .User}}
+                <span class="nav-user">@{{.User.Username}}</span>
+                <a href="/?new=1" class="btn btn-accent">+ New Post</a>
+                <form action="/logout" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-ghost">Logout</button>
+                </form>
+            {{else}}
+                <a href="/login" class="btn btn-ghost">Login</a>
+                <a href="/register" class="btn btn-accent">Register</a>
+            {{end}}
+        </nav>
+    </div>
+</header>
+<main class="container">
+{{end}}
+
+{{define "footer"}}
+</main>
+<footer class="site-footer">
+    <div class="container">
+        <p>Forum &mdash; Go + SQLite</p>
+    </div>
+</footer>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,76 @@
+{{define "post.html"}}
+{{template "header" .}}
+
+<a href="/" class="back-link">&#8592; Back</a>
+
+<article class="card post-full">
+    <div class="post-top">
+        <div class="post-cats">
+            {{range .Post.Categories}}<span class="tag">{{.}}</span>{{end}}
+        </div>
+        <span class="post-date">{{.Post.CreatedAt}}</span>
+    </div>
+    <h1 class="post-full-title">{{.Post.Title}}</h1>
+    <p class="post-author">by <strong>{{.Post.Username}}</strong></p>
+    <div class="post-body">{{.Post.Content}}</div>
+    <div class="post-footer">
+        <div class="post-actions">
+            {{if .User}}
+            <form action="/post/{{.Post.ID}}/react" method="post" style="display:inline">
+                <input type="hidden" name="type" value="like">
+                <button type="submit" class="react-btn{{if eq .Post.UserReaction "like"}} liked{{end}}">▲ {{.Post.Likes}}</button>
+            </form>
+            <form action="/post/{{.Post.ID}}/react" method="post" style="display:inline">
+                <input type="hidden" name="type" value="dislike">
+                <button type="submit" class="react-btn dis{{if eq .Post.UserReaction "dislike"}} disliked{{end}}">▼ {{.Post.Dislikes}}</button>
+            </form>
+            {{else}}
+            <span class="react-count">▲ {{.Post.Likes}}</span>
+            <span class="react-count">▼ {{.Post.Dislikes}}</span>
+            {{end}}
+        </div>
+    </div>
+</article>
+
+<section class="comments-section">
+    <h2 class="section-title">{{.Post.CommentCount}} Comment{{if ne .Post.CommentCount 1}}s{{end}}</h2>
+
+    {{if .User}}
+    <form action="/post/{{.Post.ID}}/comment" method="post" class="card comment-form">
+        <textarea name="content" placeholder="Write a comment..." rows="3" class="input" required></textarea>
+        <button type="submit" class="btn btn-accent" style="margin-top:.75rem">Post Comment</button>
+    </form>
+    {{else}}
+    <div class="card empty-state">
+        <p><a href="/login" class="link">Login</a> to leave a comment.</p>
+    </div>
+    {{end}}
+
+    {{range .Comments}}
+    <div class="card comment-card">
+        <div class="comment-header">
+            <strong class="comment-author">{{.Username}}</strong>
+            <span class="post-date">{{.CreatedAt}}</span>
+        </div>
+        <p class="comment-body">{{.Content}}</p>
+        <div class="post-actions" style="margin-top:.5rem">
+            {{if $.User}}
+            <form action="/comment/{{.ID}}/react" method="post" style="display:inline">
+                <input type="hidden" name="type" value="like">
+                <button type="submit" class="react-btn react-sm{{if eq .UserReaction "like"}} liked{{end}}">▲ {{.Likes}}</button>
+            </form>
+            <form action="/comment/{{.ID}}/react" method="post" style="display:inline">
+                <input type="hidden" name="type" value="dislike">
+                <button type="submit" class="react-btn react-sm dis{{if eq .UserReaction "dislike"}} disliked{{end}}">▼ {{.Dislikes}}</button>
+            </form>
+            {{else}}
+            <span class="react-count">▲ {{.Likes}}</span>
+            <span class="react-count">▼ {{.Dislikes}}</span>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+</section>
+
+{{template "footer" .}}
+{{end}}

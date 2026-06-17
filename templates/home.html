@@ -3,29 +3,29 @@
 
 {{if .ShowNewPost}}
 <section class="card new-post-section">
-    <h2>New Post</h2>
+    <h2>Nouveau post</h2>
     {{if .Error}}<div class="alert">{{.Error}}</div>{{end}}
     <form action="/new-post" method="post">
         <div class="form-group">
-            <input type="text" name="title" placeholder="Title" required class="input">
+            <input type="text" name="title" placeholder="Titre" required class="input">
         </div>
         <div class="form-group">
-            <textarea name="content" placeholder="Share your thoughts..." rows="6" class="input" required></textarea>
+            <textarea name="content" placeholder="Partagez votre expérience du jeu..." rows="6" class="input" required></textarea>
         </div>
         <div class="form-group">
-            <label class="form-label">Categories</label>
+            <label class="form-label">Catégories</label>
             <div class="cat-grid">
                 {{range .Categories}}
                 <label class="cat-check">
                     <input type="checkbox" name="categories" value="{{.Name}}">
-                    <span>{{.Name}}</span>
+                    <span class="cat-{{.Name}}">{{.Name}}</span>
                 </label>
                 {{end}}
             </div>
         </div>
         <div class="form-row">
-            <button type="submit" class="btn btn-accent">Publish</button>
-            <a href="/" class="btn btn-ghost">Cancel</a>
+            <button type="submit" class="btn btn-accent">Publier</button>
+            <a href="/" class="btn btn-ghost">Annuler</a>
         </div>
     </form>
 </section>
@@ -35,17 +35,17 @@
 
     <aside class="sidebar">
         <div class="card">
-            <h3 class="sidebar-title">Filter</h3>
-            <a href="/" class="filter-link{{if .IsHome}} active{{end}}">All Posts</a>
+            <h3 class="sidebar-title">Filtrer</h3>
+            <a href="/" class="filter-link{{if .IsHome}} active{{end}}">Tous les posts</a>
             {{if .User}}
-            <a href="/?mine=1" class="filter-link{{if eq .FilterMine "1"}} active{{end}}">My Posts</a>
-            <a href="/?liked=1" class="filter-link{{if eq .FilterLiked "1"}} active{{end}}">Liked Posts</a>
+            <a href="/?mine=1" class="filter-link{{if eq .FilterMine "1"}} active{{end}}">Mes posts</a>
+            <a href="/?liked=1" class="filter-link{{if eq .FilterLiked "1"}} active{{end}}">Posts aimés</a>
             {{end}}
         </div>
         <div class="card">
-            <h3 class="sidebar-title">Categories</h3>
+            <h3 class="sidebar-title">Catégories</h3>
             {{range .Categories}}
-            <a href="/?cat={{.Name}}" class="filter-link{{if eq $.FilterCat .Name}} active{{end}}">{{.Name}}</a>
+            <a href="/?cat={{.Name}}" class="filter-link cat-link-{{.Name}}{{if eq $.FilterCat .Name}} active{{end}}">{{.Name}}</a>
             {{end}}
         </div>
     </aside>
@@ -53,7 +53,7 @@
     <section class="posts-list">
         {{if not .Posts}}
         <div class="card empty-state">
-            <p>No posts yet.{{if .User}} <a href="/?new=1" class="link">Be the first!</a>{{end}}</p>
+            <p>Aucun post pour l'instant.{{if .User}} <a href="/?new=1" class="link">Soyez le premier !</a>{{end}}</p>
         </div>
         {{end}}
 
@@ -61,14 +61,14 @@
         <article class="card post-card">
             <div class="post-top">
                 <div class="post-cats">
-                    {{range .Categories}}<span class="tag">{{.}}</span>{{end}}
+                    {{range .Categories}}<span class="tag" data-cat="{{.}}">{{.}}</span>{{end}}
                 </div>
                 <span class="post-date">{{.CreatedAt}}</span>
             </div>
             <a href="/post/{{.ID}}" class="post-title">{{.Title}}</a>
             <p class="post-excerpt">{{truncate .Content 180}}</p>
             <div class="post-footer">
-                <span class="post-author">by <strong>{{.Username}}</strong></span>
+                <span class="post-author">par <strong>{{.Username}}</strong></span>
                 <div class="post-actions">
                     {{if $.User}}
                     <form action="/post/{{.ID}}/react" method="post" style="display:inline">

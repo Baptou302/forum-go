@@ -10,6 +10,12 @@
     --c4-dim:   rgba(245, 245, 245, 0.45);
     --radius:   10px;
     --gap:      1.25rem;
+
+    /* couleurs du stylo */
+    --rouge:  #e94560;
+    --bleu:   #4fa3e0;
+    --vert:   #4caf82;
+    --noir:   #c0c0c0;
 }
 
 /* ── Reset ───────────────────────────────────────────────────────────────── */
@@ -37,10 +43,28 @@ a { color: inherit; text-decoration: none; }
 
 main.container { padding-top: var(--gap); padding-bottom: 3rem; flex: 1; }
 
+/* ── 4 dots couleurs ─────────────────────────────────────────────────────── */
+.dot        { font-size: .85em; }
+.dot.rouge  { color: var(--rouge); }
+.dot.bleu   { color: var(--bleu);  }
+.dot.vert   { color: var(--vert);  }
+.dot.noir   { color: var(--noir); }
+
+/* tags couleur par catégorie */
+.tag[data-cat="Rouge"]    { background: rgba(233,69,96,.15);   color: var(--rouge); border-color: var(--rouge); }
+.tag[data-cat="Bleu"]     { background: rgba(79,163,224,.15);  color: var(--bleu);  border-color: var(--bleu);  }
+.tag[data-cat="Vert"]     { background: rgba(76,175,130,.15);  color: var(--vert);  border-color: var(--vert);  }
+.tag[data-cat="Noir"]     { background: rgba(192,192,192,.15); color: var(--noir);  border-color: var(--noir);  }
+
+/* logo block */
+.logo-block { display: flex; flex-direction: column; gap: .1rem; }
+.logo-sub   { font-size: .7rem; color: var(--c4-dim); letter-spacing: .04em; }
+
 /* ── Header ──────────────────────────────────────────────────────────────── */
 .site-header {
     background: var(--c2);
-    border-bottom: 2px solid var(--c3);
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(90deg, var(--rouge), var(--bleu), var(--vert), var(--jaune)) 1;
     position: sticky;
     top: 0;
     z-index: 10;

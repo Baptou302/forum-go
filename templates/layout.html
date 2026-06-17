@@ -4,23 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum</title>
+    <title>4 Couleurs — Forum</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <header class="site-header">
     <div class="container nav-bar">
-        <a href="/" class="logo">&#9670; Forum</a>
+        <div class="logo-block">
+            <a href="/" class="logo">
+                <span class="dot rouge">&#9679;</span>
+                <span class="dot bleu">&#9679;</span>
+                <span class="dot vert">&#9679;</span>
+                <span class="dot noir">&#9679;</span>
+                4 Couleurs
+            </a>
+            <span class="logo-sub">Le forum du jeu de cartes</span>
+        </div>
         <nav>
             {{if .User}}
                 <span class="nav-user">@{{.User.Username}}</span>
-                <a href="/?new=1" class="btn btn-accent">+ New Post</a>
+                <a href="/?new=1" class="btn btn-accent">+ Nouveau post</a>
                 <form action="/logout" method="post" style="display:inline">
-                    <button type="submit" class="btn btn-ghost">Logout</button>
+                    <button type="submit" class="btn btn-ghost">Déconnexion</button>
                 </form>
             {{else}}
-                <a href="/login" class="btn btn-ghost">Login</a>
-                <a href="/register" class="btn btn-accent">Register</a>
+                <a href="/login" class="btn btn-ghost">Connexion</a>
+                <a href="/register" class="btn btn-accent">S'inscrire</a>
             {{end}}
         </nav>
     </div>
@@ -32,7 +41,13 @@
 </main>
 <footer class="site-footer">
     <div class="container">
-        <p>Forum &mdash; Go + SQLite</p>
+        <p>
+            <span class="dot rouge">&#9679;</span>
+            <span class="dot bleu">&#9679;</span>
+            <span class="dot vert">&#9679;</span>
+            <span class="dot noir">&#9679;</span>
+            4 Couleurs Forum &mdash; Go + SQLite
+        </p>
     </div>
 </footer>
 </body>

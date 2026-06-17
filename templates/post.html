@@ -1,17 +1,17 @@
 {{define "post.html"}}
 {{template "header" .}}
 
-<a href="/" class="back-link">&#8592; Back</a>
+<a href="/" class="back-link">&#8592; Retour</a>
 
 <article class="card post-full">
     <div class="post-top">
         <div class="post-cats">
-            {{range .Post.Categories}}<span class="tag">{{.}}</span>{{end}}
+            {{range .Post.Categories}}<span class="tag" data-cat="{{.}}">{{.}}</span>{{end}}
         </div>
         <span class="post-date">{{.Post.CreatedAt}}</span>
     </div>
     <h1 class="post-full-title">{{.Post.Title}}</h1>
-    <p class="post-author">by <strong>{{.Post.Username}}</strong></p>
+    <p class="post-author">par <strong>{{.Post.Username}}</strong></p>
     <div class="post-body">{{.Post.Content}}</div>
     <div class="post-footer">
         <div class="post-actions">
@@ -33,16 +33,16 @@
 </article>
 
 <section class="comments-section">
-    <h2 class="section-title">{{.Post.CommentCount}} Comment{{if ne .Post.CommentCount 1}}s{{end}}</h2>
+    <h2 class="section-title">{{.Post.CommentCount}} Commentaire{{if ne .Post.CommentCount 1}}s{{end}}</h2>
 
     {{if .User}}
     <form action="/post/{{.Post.ID}}/comment" method="post" class="card comment-form">
-        <textarea name="content" placeholder="Write a comment..." rows="3" class="input" required></textarea>
-        <button type="submit" class="btn btn-accent" style="margin-top:.75rem">Post Comment</button>
+        <textarea name="content" placeholder="Écrire un commentaire..." rows="3" class="input" required></textarea>
+        <button type="submit" class="btn btn-accent" style="margin-top:.75rem">Commenter</button>
     </form>
     {{else}}
     <div class="card empty-state">
-        <p><a href="/login" class="link">Login</a> to leave a comment.</p>
+        <p><a href="/login" class="link">Connectez-vous</a> pour laisser un commentaire.</p>
     </div>
     {{end}}
 

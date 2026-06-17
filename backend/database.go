@@ -81,7 +81,7 @@ func initDB() {
 			FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
 			FOREIGN KEY (comment_id) REFERENCES comments(id) ON DELETE CASCADE
 		)`,
-		`INSERT OR IGNORE INTO categories (name) VALUES ('Tech'),('Science'),('Art'),('Music'),('Sport'),('Gaming'),('Other')`,
+		`INSERT OR IGNORE INTO categories (name) VALUES ('Rouge'),('Bleu'),('Vert'),('Noir')`,
 	}
 	for _, s := range stmts {
 		if _, err := db.Exec(s); err != nil {
